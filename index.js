@@ -25,25 +25,30 @@ var options_object = {
   validator: true
 };
 
+var logger = require('./logger');
+
 oasTools.configure(options_object);
 
 // Initialize database before running the app
 var db = require('./db');
 db.connect(function (err, _db) {
-  console.info('Initializing DB...');
+  logger.info('Initializing DB...');
   if(err) {
-    console.error('Error connecting to DB!', err);
-    return 1;
+    logger.error('Error connecting to DB!', err);
+    setTimeout(() => {
+      process.exit(1);
+    }, 1000);
+    //return 1;
   } else {
     db.find({}, function (err, contacts) {
       if(err) {
-        console.error('Error while getting initial data from DB!', err);
+        logger.error('Error while getting initial data from DB!', err);
       } else {
         if (contacts.length === 0) {
-          console.info('Empty DB, loading initial data...');
+          logger.info('Empty DB, loading initial data...');
           db.init();
       } else {
-          console.info('DB already has ' + contacts.length + ' contacts.');
+          logger.info('DB already has ' + contacts.length + ' contacts.');
       }
       }
     });
@@ -52,11 +57,11 @@ db.connect(function (err, _db) {
 
 oasTools.initialize(oasDoc, app, function() {
   http.createServer(app).listen(serverPort, function() {
-    console.log("App running at http://localhost:" + serverPort);
-    console.log("________________________________________________________________");
+    logger.info("App running at http://localhost:" + serverPort);
+    logger.info("________________________________________________________________");
     if (options_object.docs !== false) {
-      console.log('API docs (Swagger UI) available on http://localhost:' + serverPort + '/docs');
-      console.log("________________________________________________________________");
+      logger.info('API docs (Swagger UI) available on http://localhost:' + serverPort + '/docs');
+      logger.info("________________________________________________________________");
     }
   });
 });

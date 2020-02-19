@@ -1,0 +1,12 @@
+version: '3'
+services:
+    contacts:
+        environment: 
+            - NODE_ENV=development
+        volumes:
+            - "./logs:/app/logs"
+    mongo:
+        volumes: 
+            - "database:/data/db"
+volumes: 
+    database:
