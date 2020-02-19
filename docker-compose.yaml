@@ -1,0 +1,17 @@
+version: '3'
+services:
+    coches:
+        build: .
+        ports:
+            - "8080:8080"
+        depends_on:
+            - mongo
+        restart: on-failure
+    mongo:
+        image: "mongo"
+        ports:
+            - "27017:27017"
+        volumes: 
+            - "database:/data/db"
+volumes: 
+    database:
