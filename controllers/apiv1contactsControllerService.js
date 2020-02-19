@@ -1,7 +1,7 @@
 'use strict'
 
 var db = require('../db');
-var logger = require('./logger');
+var logger = require('../logger');
 
 module.exports.getContacts = function getContacts(req, res, next) {
   logger.info("New GET request to /contacts");

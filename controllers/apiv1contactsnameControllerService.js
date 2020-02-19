@@ -1,7 +1,7 @@
 'use strict'
 
 var db = require('../db');
-var logger = require('./logger');
+var logger = require('../logger');
 
 module.exports.findContactByname = function findContactByname(req, res, next) {
   var name = req.name.value;
