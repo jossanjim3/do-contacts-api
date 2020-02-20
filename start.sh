@@ -1,4 +1,5 @@
-BASE_SITE=localhost
+#BASE_SITE=localhost
+BASE_SITE=do1920.com
 
 #development
 export NODE_ENV=development
