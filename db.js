@@ -11,7 +11,9 @@ var logger = require('./logger');
 //const url = 'mongodb://172.17.0.2:27017';
 //da error por el tema de la ip, hay que modificarlo, hay que independizarse de db.js de la ip
 //docker compose permite direccionar por nombre "mongo"
-const url = 'mongodb://mongo:27017';
+//const url = 'mongodb://mongo:27017';
+const dbPort = process.env.DBPORT || 27017;
+const url = 'mongodb://mongo:' + dbPort;
 
 
 // Database Name

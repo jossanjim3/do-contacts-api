@@ -3,19 +3,23 @@ services:
     contacts:
         build: .
         ports:
-            - "${PORT:-8080}:8080"
+            - "127.0.0.1:${PORT}:8080"
         depends_on:
             - mongo
         restart: on-failure
         volumes: 
             - "logsvol:/app/logs"
         environment: 
-            - NODE_ENV=production
+            - NODE_ENV=${NODE_ENV}
+            - PORT=${PORT}
+            - DBPORT=${DBPORT}
+            - VIRTUAL_HOST=${VIRTUAL_HOST}
+            - VIRUTAL_PORT=${PORT}
     mongo:
         image: "mongo"
-        ports:
-            - "27017:27017"
-        command: --logpath /var/log/mongodb/mongodb.log
+        expose: 
+            - "${DBPORT}"
+        command: --port ${DBPORT} --logpath /var/log/mongodb/mongodb.log
         volumes: 
             - "database:/data/db"
             - "logsvol:/var/log/mongodb"
@@ -23,3 +27,8 @@ volumes:
     database:
     logsvol:
         external: true
+
+networks: 
+    default: 
+        external:
+            name: service-tier
